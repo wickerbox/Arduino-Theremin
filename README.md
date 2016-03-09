@@ -1,14 +1,25 @@
-ardu-midi-ping
-==============
+# Arduino Theremin v1
 
-Creating MIDI files from a Maxbotix LV-EZ4 and Arduino
+Playing music by waving your hands over a rangefinder for pitch and pressing capacitive sense pads for key.
 
-- The Avicii song MIDI is the reference song. 
+<img src="osh-preview.png">
 
-- Stripped out as much of the header as possible in minimal.csv.
+|Refdes|Qty|Description|Digikey|
+|------|---|-----------|-------|
+|LED1|1|LED RED DIFF 5MM ROUND T/H|1125-1188-ND|
+|LED2|1|LED GRN DIFF 5MM ROUND T/H|1125-1184-ND|
+|R1,R2|2|RES 220 OHM 1/4W 5% CF MINI|S220QCT-ND|
+|R3,R4|2|RES 10K OHM 1/4W 5% CF MINI|S10KQCT-ND|
+|RV1|1|POT 10K OHM 1/5W PLASTIC LINEAR|987-1301-ND|
+|SP1|1|SPEAKER 8 OHM .25W 23MM ROUND|458-1124-ND|
+|SW1|1|SWITCH TACTILE SPST-NO 0.05A 24V|SW400-ND|
+|SW2|1|SWITCH TOGGLE SPDT 5A 120V|EG2377-ND|
+|U1|1|CONN HEADER .100" SNGL STR 40POS|S1012EC-40-ND|
 
-- Wrote a simple Arduino script for the Maxbotix LV-EZ4 rangefinder to generate the serial output format.
+Note: for U1, one 40-position header is the cheapest option (about $0.50) and you can just snap it apart into the sections you need.
 
-- Copied and pasted (sorry) from that into a CSV file and applied the csvmidi script from <a href="http://www.fourmilab.ch/webtools/midicsv/">Fourmilab</a>.
+|Refdes|Qty|Description|Adafruit|
+|------|---|-----------|--------|
+|P1|1|Maxbotix Ultrasonic Rangefinder LV-EZ1|Product 172|
 
-- Played the result using timidity. 
+
