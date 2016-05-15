@@ -1,4 +1,4 @@
-update=Sat 30 Apr 2016 11:48:08 AM PDT
+update=Sat 14 May 2016 06:30:01 PM PDT
 version=1
 last_client=kicad
 [general]
@@ -6,11 +6,6 @@ version=1
 [cvpcb]
 version=1
 NetIExt=net
-[eeschema]
-version=1
-LibDir=/home/wicker/proj/kicad/
-[eeschema/libraries]
-LibName1=/home/wicker/proj/wbox/wickerlib/kicad-libraries/wickerlib
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -40,3 +35,8 @@ SolderMaskMinWidth=0.1016
 DrawSegmentWidth=0.15
 BoardOutlineThickness=0.15
 ModuleOutlineThickness=0.15
+[eeschema]
+version=1
+LibDir=/home/wicker/proj/kicad/
+[eeschema/libraries]
+LibName1=/home/wicker/proj/wbox/wickerlib/libraries/wickerlib
