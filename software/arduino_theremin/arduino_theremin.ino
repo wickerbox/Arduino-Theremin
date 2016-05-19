@@ -9,6 +9,11 @@
 
 #include "pitches.h"
 
+#define START    0
+#define RECORD   1
+#define HOLD     2
+#define PLAYBACK 3
+
 // these arrays contain each key's set of notes
 int noteArray_A[9];
 int noteArray_C[15];
@@ -21,9 +26,12 @@ uint16_t current_tune[1024];
 uint16_t curr_key;
 uint16_t note_delay; // in milliseconds
 
+// set up state
+uint8_t state = START;
+
 // inputs
-const uint8_t recordPin = 9;
-const uint8_t playbackPin = 8;
+const uint8_t recordPin = 8;
+const uint8_t playbackPin = 9;
 const uint8_t pwmPin = 2;
 const uint8_t aKeyPin = 7;
 const uint8_t cKeyPin = 6;
@@ -52,15 +60,40 @@ void setup() {
   pinMode(playbackLEDPin, OUTPUT);
   pinMode(recordLEDPin, OUTPUT);
 
+  state = START;
 }
 
 void loop() {
 
-  digitalWrite(recordLEDPin, HIGH);
-  digitalWrite(playbackLEDPin, HIGH);
-  delay(1000);
-  digitalWrite(recordLEDPin, LOW);
-  digitalWrite(playbackLEDPin, LOW);
-  delay(1000);
+  switch(state) {
+    case START:
+      digitalWrite(recordLEDPin, HIGH);
+      digitalWrite(playbackLEDPin, HIGH);
+      delay(1000);
+      digitalWrite(recordLEDPin, LOW);
+      digitalWrite(playbackLEDPin, LOW);
+      delay(1000);
+      break;
+    case RECORD:
+      digitalWrite(recordLEDPin, HIGH);
+      digitalWrite(playbackLEDPin, LOW);
+      break;
+    case HOLD:
+      digitalWrite(recordLEDPin, LOW);
+      digitalWrite(playbackLEDPin, LOW);
+      break;
+    case PLAYBACK:
+      digitalWrite(recordLEDPin, LOW);
+      digitalWrite(playbackLEDPin, HIGH);
+      break;
+  }
 
+  // change state based on input switch
+  if (digitalRead(recordPin) == HIGH)
+    state = RECORD;
+  else if (digitalRead(playbackPin) == HIGH)
+    state = PLAYBACK;
+  else 
+    state = HOLD;
+    
 }
