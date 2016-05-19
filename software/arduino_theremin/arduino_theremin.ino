@@ -22,9 +22,11 @@
 #define F 2
 
 #define MAXNOTE  7
+#define MAXTUNECOUNT 299
 
 // set up state
 uint8_t state = START;
+uint8_t last_state = START;
 
 // these arrays contain each key's set of notes
 int noteArray_A[8] = {NOTE_A1,NOTE_A2,NOTE_A3,NOTE_A4,NOTE_A5,
@@ -37,9 +39,12 @@ int noteArray_F[8] = {NOTE_F1,NOTE_F2,NOTE_F3,NOTE_F4,NOTE_F5,
 // huge array to hold the current tune
 // largest note in pitches.h is 4978
 // 2^16 = 65536
-uint16_t current_tune[1024];
+uint16_t current_tune[300];
+uint16_t current_tune_count = 0;
+uint16_t total_current_notes = 0;
 uint16_t curr_key = A;
-uint16_t note_delay; // in milliseconds
+uint16_t note_delay = 50; // in milliseconds
+uint16_t note = 0;
 
 // inputs
 const uint8_t recordPin = 8;
@@ -56,10 +61,6 @@ const uint8_t recordLEDPin = A5;
 
 // process input from the rangefinder
 long pulse, inches, cm;
-
-// counter variables
-int count = 0;
-int note = 0;
 
 uint8_t readCapacitivePin(int pinToMeasure) {
 
@@ -125,16 +126,16 @@ uint8_t readCapacitivePin(int pinToMeasure) {
 void startupBlinkLEDs() {
   digitalWrite(recordLEDPin, HIGH);
   digitalWrite(playbackLEDPin, HIGH);
-  delay(500);
+  delay(200);
   digitalWrite(recordLEDPin, LOW);
   digitalWrite(playbackLEDPin, LOW);
-  delay(500);
+  delay(200);
   digitalWrite(recordLEDPin, HIGH);
   digitalWrite(playbackLEDPin, HIGH);
-  delay(500);
+  delay(200);
   digitalWrite(recordLEDPin, LOW);
   digitalWrite(playbackLEDPin, LOW);
-  delay(500);      
+  delay(200);      
 }
 
 void setup() {
@@ -163,6 +164,14 @@ void loop() {
       startupBlinkLEDs();
       break;
     case RECORD:
+
+      // if we just entered the record state, clear the current tune
+      if (last_state != RECORD) {
+        for (current_tune_count = 0; current_tune_count < MAXTUNECOUNT; current_tune_count++)
+          current_tune[current_tune_count] = 0;
+        current_tune_count = 0;
+      }
+      
       digitalWrite(recordLEDPin, HIGH);
       digitalWrite(playbackLEDPin, LOW);
 
@@ -175,6 +184,15 @@ void loop() {
         note = 7;
       note = note - 7;
 
+      // record the note in the correct key
+      if (current_tune_count < 299) 
+        if (curr_key == A)
+          current_tune[current_tune_count++] = noteArray_A[note];
+        else if (curr_key == C)
+          current_tune[current_tune_count++] = noteArray_C[note];
+        else 
+          current_tune[current_tune_count++] = noteArray_F[note];
+
       // play note in correct key
       if (curr_key == A)
         tone(3,noteArray_A[note],1000/8);
@@ -182,14 +200,38 @@ void loop() {
         tone(3,noteArray_C[note],1000/8);
       else 
         tone(3,noteArray_F[note],1000/8);
+
+      delay(note_delay);
+
       break;
     case HOLD:
+      // if we just came here from record, let's capture the number of
+      // notes in our current tune, in case we want to play it back
+      if (last_state == RECORD) {
+        total_current_notes = current_tune_count - 1;
+      }
+      
       digitalWrite(recordLEDPin, LOW);
       digitalWrite(playbackLEDPin, LOW);
+
+      delay(note_delay);
+
       break;
     case PLAYBACK:
+      // reset the counter so we can play it back once
+      // use the 
+      if (last_state != PLAYBACK) {
+        current_tune_count = 0;
+      }
+      if (current_tune_count <= total_current_notes) {
+        tone(3,current_tune[current_tune_count],1000/8);
+        current_tune_count++;
+      }
       digitalWrite(recordLEDPin, LOW);
       digitalWrite(playbackLEDPin, HIGH);
+
+      delay(note_delay*2);
+
       break;
   }
 
@@ -205,6 +247,7 @@ void loop() {
     curr_key = curr_key;
 
   // change state based on input switch
+  last_state = state;
   if (digitalRead(recordPin) == HIGH)
     state = RECORD;
   else if (digitalRead(playbackPin) == HIGH)
