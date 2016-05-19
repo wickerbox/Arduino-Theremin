@@ -122,6 +122,21 @@ uint8_t readCapacitivePin(int pinToMeasure) {
   return cycles;
 }
 
+void startupBlinkLEDs() {
+  digitalWrite(recordLEDPin, HIGH);
+  digitalWrite(playbackLEDPin, HIGH);
+  delay(500);
+  digitalWrite(recordLEDPin, LOW);
+  digitalWrite(playbackLEDPin, LOW);
+  delay(500);
+  digitalWrite(recordLEDPin, HIGH);
+  digitalWrite(playbackLEDPin, HIGH);
+  delay(500);
+  digitalWrite(recordLEDPin, LOW);
+  digitalWrite(playbackLEDPin, LOW);
+  delay(500);      
+}
+
 void setup() {
 
   Serial.begin(9600);
@@ -145,43 +160,13 @@ void loop() {
 
   switch(state) {
     case START:
-      digitalWrite(recordLEDPin, HIGH);
-      digitalWrite(playbackLEDPin, HIGH);
-      delay(500);
-      digitalWrite(recordLEDPin, LOW);
-      digitalWrite(playbackLEDPin, LOW);
-      delay(500);
-      digitalWrite(recordLEDPin, HIGH);
-      digitalWrite(playbackLEDPin, HIGH);
-      delay(500);
-      digitalWrite(recordLEDPin, LOW);
-      digitalWrite(playbackLEDPin, LOW);
-      delay(500);      break;
+      startupBlinkLEDs();
+      break;
     case RECORD:
       digitalWrite(recordLEDPin, HIGH);
       digitalWrite(playbackLEDPin, LOW);
-      
-      for (count = 0; count < MAXNOTE; count++) {
-          tone(3,noteArray_A[count],1000/8);
-          Serial.print(noteArray_A[count]);
-          Serial.print(" ");
-          delay(800);
-      }
-      Serial.println(" ");
-      for (count = 0; count < MAXNOTE; count++) {
-          tone(3,noteArray_C[count],1000/8);
-          Serial.print(noteArray_C[count]);
-          Serial.print(" ");
-          delay(800);     }
-      Serial.println(" ");
-      for (count = 0; count < MAXNOTE; count++) {
-          tone(3,noteArray_F[count],1000/8);
-          Serial.print(noteArray_F[count]);
-          Serial.print(" ");
-           delay(800);
-      }
-      Serial.println(" ");
-      
+
+      // get note
       pulse = pulseIn(pwmPin, HIGH);
       note = pulse/147;
       if (note > 14)
@@ -189,10 +174,14 @@ void loop() {
       else if (note < 7)
         note = 7;
       note = note - 7;
-      Serial.println(note);
 
-      delay(1000);
-      
+      // play note in correct key
+      if (curr_key == A)
+        tone(3,noteArray_A[note],1000/8);
+      else if (curr_key == C)
+        tone(3,noteArray_C[note],1000/8);
+      else 
+        tone(3,noteArray_F[note],1000/8);
       break;
     case HOLD:
       digitalWrite(recordLEDPin, LOW);
@@ -201,30 +190,19 @@ void loop() {
     case PLAYBACK:
       digitalWrite(recordLEDPin, LOW);
       digitalWrite(playbackLEDPin, HIGH);
-
-      int a = readCapacitivePin(aKeyPin);
-      int c = readCapacitivePin(cKeyPin);
-      int f = readCapacitivePin(fKeyPin);
-
-      Serial.print(a);
-      Serial.print(" ");
-      Serial.print(c);
-      Serial.print(" ");
-      Serial.println(f);
-
-      if (a > 5)
-        curr_key = A;
-      else if (c > 5)
-        curr_key = C;
-      else if (f > 5)
-        curr_key = F;
-      else
-        curr_key = curr_key;
-
-      Serial.println(curr_key);
-      delay(200);
       break;
   }
+
+
+  // change the key based on cap sense input
+  if (readCapacitivePin(aKeyPin) > 5)
+    curr_key = A;
+  else if (readCapacitivePin(cKeyPin) > 5)
+    curr_key = C;
+  else if (readCapacitivePin(fKeyPin) > 5)
+    curr_key = F;
+  else
+    curr_key = curr_key;
 
   // change state based on input switch
   if (digitalRead(recordPin) == HIGH)
