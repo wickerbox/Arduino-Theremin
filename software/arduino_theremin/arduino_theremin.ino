@@ -9,60 +9,58 @@
 
 #include "pitches.h"
 
-int noteArray[15];
+// these arrays contain each key's set of notes
+int noteArray_A[9];
+int noteArray_C[15];
+int noteArray_F[15];
 
-const int pwPin = 2;
+// huge array to hold the current tune
+// largest note in pitches.h is 4978
+// 2^16 = 
+uint16_t current_tune[1024];
+uint16_t curr_key;
+uint16_t note_delay; // in milliseconds
 
+// inputs
+const uint8_t recordPin = 9;
+const uint8_t playbackPin = 8;
+const uint8_t pwmPin = 2;
+const uint8_t aKeyPin = 7;
+const uint8_t cKeyPin = 6;
+const uint8_t fKeyPin = 5;
+
+// outputs
+const uint8_t speakerPin = 3;
+const uint8_t playbackLEDPin = A4;
+const uint8_t recordLEDPin = A5;
+
+// process input from the rangefinder
 long pulse, inches, cm;
-int outOctave, count;
 
 void setup() {
-  count = 0;
-  
-  noteArray[9]  = NOTE_C1;
-  noteArray[10] = NOTE_C2;
-  noteArray[11] = NOTE_C3;
-  noteArray[12] = NOTE_C4;
-  noteArray[13] = NOTE_C5;
-  noteArray[14] = NOTE_C6;
 
   Serial.begin(9600);
   Serial.println("Begin.");
-  pinMode(pwPin, INPUT);
+
+  pinMode(recordPin, INPUT);
+  pinMode(playbackPin, INPUT);
+  pinMode(pwmPin, INPUT);
+  pinMode(aKeyPin, INPUT);
+  pinMode(cKeyPin, INPUT);
+  pinMode(fKeyPin, INPUT);
+  pinMode(speakerPin, OUTPUT);
+  pinMode(playbackLEDPin, OUTPUT);
+  pinMode(recordLEDPin, OUTPUT);
 
 }
 
 void loop() {
-  
-  pulse = pulseIn(pwPin, HIGH);
-  inches = pulse/147;
-  Serial.println(inches);
-  cm = inches * 2.54;
-  
-  if (inches <= 8) {
-    outOctave = 10;
-  }
-  else if (inches >= 19) {
-    outOctave = 120;
-  }
-  else {
-    outOctave =  inches;
-    tone(3,noteArray[inches],1000/8);
-    Serial.println(outOctave);
-  }
-//  Serial.print("1, ");
-//  Serial.print(count);
-//  Serial.print(", Note_on_c, 11, ");
-//  Serial.print(outOctave);
-//  Serial.println(", 127");
-//  
-//  if (count > 2000)
-//  {
-//    Serial.print("1, ");
-//    Serial.print(count + 50);
-//    Serial.println(", End_track");
-//    Serial.println("0, 0, End_of_file");
-//    return;
-//  }
-//  count = count + 100;
-  }
+
+  digitalWrite(recordLEDPin, HIGH);
+  digitalWrite(playbackLEDPin, HIGH);
+  delay(1000);
+  digitalWrite(recordLEDPin, LOW);
+  digitalWrite(playbackLEDPin, LOW);
+  delay(1000);
+
+}
