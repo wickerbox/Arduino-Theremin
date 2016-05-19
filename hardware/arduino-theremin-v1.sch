@@ -1,5 +1,6 @@
 EESchema Schematic File Version 2
 LIBS:wickerlib
+LIBS:arduino-theremin-v1-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -620,4 +621,10 @@ F 3 "" H 8825 1575 50  0000 C CNN
 	1    8825 1575
 	1    0    0    -1  
 $EndComp
+Text Notes 5225 5225 0    79   ~ 0
+A
+Text Notes 6400 5700 0    79   ~ 0
+C
+Text Notes 6425 5225 0    79   ~ 0
+F
 $EndSCHEMATC
