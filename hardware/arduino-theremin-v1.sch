@@ -22,9 +22,9 @@ D7_KEY1
 Text Label 5000 4275 0    60   ~ 0
 D6_KEY2
 Text Label 5700 1750 0    60   ~ 0
-D9_BTN_RECORD
+D9_BTN_PLAYBACK
 Text Label 5700 1650 0    60   ~ 0
-D8_BTN_PLAYBACK
+D8_BTN_RECORD
 Text Label 5000 4175 0    60   ~ 0
 D5_KEY3
 Text Label 8475 3775 0    60   ~ 0

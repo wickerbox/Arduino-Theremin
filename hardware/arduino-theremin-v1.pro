@@ -1,4 +1,4 @@
-update=Sat 14 May 2016 06:30:01 PM PDT
+update=Thu 19 May 2016 03:17:29 PM PDT
 version=1
 last_client=kicad
 [general]
@@ -6,16 +6,6 @@ version=1
 [cvpcb]
 version=1
 NetIExt=net
-[schematic_editor]
-version=1
-PageLayoutDescrFile=
-PlotDirectoryName=
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=Pcbnew
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
-LabSize=79
 [pcbnew]
 version=1
 PageLayoutDescrFile=
@@ -40,3 +30,13 @@ version=1
 LibDir=/home/wicker/proj/kicad/
 [eeschema/libraries]
 LibName1=/home/wicker/proj/wbox/wickerlib/libraries/wickerlib
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=79
