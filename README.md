@@ -4,6 +4,25 @@ Playing music by waving your hands over a rangefinder for pitch and pressing cap
 
 <img src="osh-preview.png">
 
+<img src="arduino-theremin.png">
+
+## Instructions
+
+1. Program the Arduino Uno
+1. To use it, the Uno needs some sort of power, 9V or 5V or whatever.
+1. Press the 'reset' button. The red and green lights will blink.
+1. The switch normally sits in the 'OFF' position.
+1. Flip the switch to the RECORD position to play and record a tune.
+1. Move one hand vertically between 1 and about 10 inches above the rangefinder.
+1. Use the other hand to press the capacitive sense pads to choose a key.
+1. When you're done with a tune, flip the switch back to OFF.
+1. When you want to play back the tune, flip the switch to PLAYBACK.
+1. The tune will play once through. 
+1. To play it again, flip the switch to OFF and then to PLAYBACK.
+1. To record a new tune, flip the switch to RECORD, which erases the old tune.
+
+## Bill of Materials
+
 |Refdes|Qty|Description|Digikey|
 |------|---|-----------|-------|
 |J1|1|CONN HEADER FEMALE .100" SNGL STR 8POS|952-1823-ND|
