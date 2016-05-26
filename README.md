@@ -6,8 +6,6 @@ Playing music by waving your hands over a rangefinder for pitch and pressing cap
 
 <img src="arduino-theremin.png">
 
-I've <a href="https://oshpark.com/shared_projects/u5dTU3Mx">shared the boards at OSH Park</a>.
-
 ## Instructions
 
 1. Program the Arduino Uno
@@ -25,6 +23,8 @@ I've <a href="https://oshpark.com/shared_projects/u5dTU3Mx">shared the boards at
 
 ## Bill of Materials
 
+I've <a href="https://oshpark.com/shared_projects/u5dTU3Mx">shared the boards at OSH Park</a>. You can buy a set of three for $29.50. 
+
 |Refdes|Qty|Description|Digikey|
 |------|---|-----------|-------|
 |J1|1|CONN HEADER FEMALE .100" SNGL STR 8POS|952-1823-ND|
@@ -38,7 +38,7 @@ I've <a href="https://oshpark.com/shared_projects/u5dTU3Mx">shared the boards at
 |SW2|1|SWITCH TOGGLE SPDT 5A 120V|EG2377-ND|
 |U1|1|CONN HEADER MALE .100" SNGL STR 40POS|S1012EC-40-ND|
 
-Note: for U1, one 40-position header is the cheapest option (about $0.50) and you can just snap it apart into the sections you need.
+The best way to place U1 is to buy one 40-position header is the cheapest option (about $0.50) and snap it apart into the sections you need.
 
 |Refdes|Qty|Description|Adafruit|
 |------|---|-----------|--------|
