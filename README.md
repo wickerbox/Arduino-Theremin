@@ -6,6 +6,8 @@ Playing music by waving your hands over a rangefinder for pitch and pressing cap
 
 <img src="arduino-theremin.png">
 
+I've <a href="https://oshpark.com/shared_projects/u5dTU3Mx">shared the boards at OSH Park</a>.
+
 ## Instructions
 
 1. Program the Arduino Uno
